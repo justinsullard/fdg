@@ -1,0 +1,35 @@
+{
+  "name": "jsullard-fdg",
+  "version": "1.0.0",
+  "description": "Force-Directed-Graph software design tool",
+  "main": "server.js",
+  "dependencies": {
+    "colors": "^0.6.2",
+    "url": "^0.10.2",
+    "websocket": "^1.0.17"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/justinsullard/fdg.git"
+  },
+  "keywords": [
+    "software",
+    "design",
+    "force",
+    "directed",
+    "graph",
+    "justin",
+    "sullard"
+  ],
+  "author": "Justin Sullard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/justinsullard/fdg/issues"
+  },
+  "homepage": "https://github.com/justinsullard/fdg"
+}

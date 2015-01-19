@@ -1,0 +1,40 @@
+<div class="nodeEdit dialogMainContent">
+<!--
+
+            "pos": FDG.ko.observable(0),
+            "guid": FDG.ko.observable(FDG.util.guid.make()),
+            "label": FDG.ko.observable("New Node"),
+            "description": FDG.ko.observable(""),
+            "nodeType": FDG.ko.observable("module"),
+            "radius": FDG.ko.observable(10),
+            "color": FDG.ko.observable("#cccccc"),
+            "colorHighlight": FDG.ko.observable("#aaaaff"),
+            "colorSelected": FDG.ko.observable("#f5f5f5"),
+            "colorAnchored": FDG.ko.observable("#aaaaaa"),
+            "anchored": FDG.ko.observable(false),
+            "selected": FDG.ko.observable(false),
+            "highlighted": FDG.ko.observable(false),
+
+            currentX
+            currentY
+
+-->
+	<!-- ko with: node -->
+	<div class="field"><label>Label</label> <input type="text" data-bind="value: label"></div>
+	<div class="field"><label>Node Type</label> <select data-bind="value: nodeType, options: $parent.nodeTypes"></select></div>
+
+	<div class="field"><label>Description</label> <textarea data-bind="value: description"></textarea></div>
+
+	<div class="field"><label>Color</label> <input type="color" data-bind="value: color"> <span data-bind="text: color"></span></div>
+	<div class="field"><label>Color Highlight</label> <input type="color" data-bind="value: colorHighlight"> <span data-bind="text: colorHighlight"></span></div>
+	<div class="field"><label>Color Selected</label> <input type="color" data-bind="value: colorSelected"> <span data-bind="text: colorSelected"></span></div>
+	<div class="field"><label>Color Anchored</label> <input type="color" data-bind="value: colorAnchored"> <span data-bind="text: colorAnchored"></span></div>
+	<div class="field"><label>Radius</label> <input type="range" min="5" max="20" step="1" data-bind="value: radius, valueUpdate: ['change', 'update', 'mousemove', 'mousedown', 'mouseup']"> <span data-bind="text: radius"></span></div>
+
+	<!-- /ko -->
+</div>
+<div class="buttonSet">
+      <button class="center_block" data-bind="click: function () { smartColor(node, true); }"><span class="fa fa-paint-brush"></span> Smart Color</button>
+      <button data-bind="click: closeModal"><span class="fa fa-ban"></span> Cancel</button>
+      <button data-bind="click: saveAndCloseModal"><span class="fa fa-check"></span> Done</button>
+</div>

@@ -1,0 +1,237 @@
+<html>
+	<head>
+		<link rel="icon" type="image/png" href="img/fdg_logo_grey_small.png">
+		<title>FDG 2.0</title>
+		<link rel="stylesheet" type="text/css" href="css/main.css"/>
+		<link rel="stylesheet" type="text/css" href="css/font_awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="css/jquery-ui.css"/>
+		<script src=""></script>
+	</head>
+	<body class="handTool">
+		<div id="FDG-Container" class="appContainer">
+			<div id="FDG-Socket" class="appSocket">
+				<!-- ko template: 'socket.control' --><!-- /ko -->
+			</div>
+			<div id="FDG-App-Menu" class="appMenu">
+				<div class="appTitle">FDG</div>
+				<!-- ko template: 'graph.menu' --><!-- /ko -->
+			</div>
+			<div id="FDG-Node-List-Container" class="nodeListContainer">
+				<div id="FDG-Node-List-Toggle" class="nodeListToggle" title="Toggle Node List">
+					<div class="icon_small fa fa-angle-double-right hideit"></div>
+					<div class="icon_small fa fa-angle-double-left showit"></div>
+				</div>
+				<div id="FDG-Node-List" class="nodeList" data-bind="template: 'node.list'"></div>
+			</div>
+			<div id="FDG-Graph-Container" class="graphContainer">
+				<svg id="FDG-Graph" height="0" width="0" style="background-color: #fff;" xmlns="http://www.w3.org/2000/svg">
+					<g id="FDG-Connection-Group" class="connectionGroup">
+						<!-- ko foreach: connections -->
+						<g class="connection" data-bind="connectionControl: $data">
+							<path fill="none" stroke="#444" d="M0,0Z" stroke-width="4" stroke-linejoin="round" opacity="0" style="stroke-linejoin: round; opacity: 0;" data-bind="attr: {d: path, stroke: currentColor}"></path>
+							<path fill="none" stroke="#444" d="M0,0Z" stroke-width="1" stroke-linejoin="round" opacity="1" style="stroke-linejoin: round; opacity: 1;" data-bind="attr: {d: path, stroke: currentColor}"></path>
+							<!-- ALPHA LINE ENDINGS -->
+							<!-- ko if: connectionType().match(/^zeroTo/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+							<circle cx="8" cy="0" r="2" fill="#fff" stroke-width="1" stroke-linejoin="round" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"/>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/^oneTo/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/^onlyTo/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 6,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/^manyTo/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 5,0 l -6,5 M 5,0 l -6,-5 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/^anyTo/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 5,0 l -6,5 M 5,0 l -6,-5 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+							<circle cx="8" cy="0" r="2" fill="#fff" stroke-width="1" stroke-linejoin="round" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"/>
+							<!-- /ko -->
+							<!-- PAIRED LINE ENDINGS -->
+							<!-- ko if: connectionType() === 'multi' -->
+							<path fill="#fff" stroke-width="1" stroke-linejoin="round" opacity="1" d="m 0,0 l 10,-5 l -2.5,5 l 2.5,5 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+							<path fill="#fff" stroke-width="1" stroke-linejoin="round" opacity="1" d="m 0,0 l -10,-5 l 2.5,5 l -2.5,5 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType() === 'mixin' || connectionType() === 'inheritance' || connectionType() === 'extension' -->
+							<path fill="none"  stroke-width="1" stroke-linejoin="round" d="m 3,-5 l 5,5 l -5,5" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+							<!-- /ko -->
+							<!-- BETA LINE ENDINGS -->
+							<!-- ko if: connectionType() === 'mixin' -->
+							<path fill="none"  stroke-width="1" stroke-linejoin="round" d="m 0,0 l -3,-3 l -3,6 l -3,-6 l -3,6 " data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType() === 'reference' -->
+							<path fill="#444" d="m 0,0 l -10,-5 l 2.5,5 l -2.5,5 z" data-bind="attr: {fill: currentColor, transform: currentBetaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType() === 'inheritance' -->
+							<path fill="#fff"  stroke-width="1" stroke-linejoin="round" d="m 0,0 l -5,-3 l -5,3 l 5,3 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType() === 'extension' -->
+							<path fill="#444" d="m 0,0 l -5,-3 l -5,3 l 5,3 z" data-bind="attr: {fill: currentColor, transform: currentBetaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/ToZero$/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<circle cx="-8" cy="0" r="2" fill="#fff" stroke-width="1" stroke-linejoin="round" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"/>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/ToOne$/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/ToOnly$/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -6,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/ToMany$/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -5,0 l 6,5 M -5,0 l 6,-5 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/ToAny$/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -5,0 l 6,5 M -5,0 l 6,-5 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<circle cx="-8" cy="0" r="2" fill="#fff" stroke-width="1" stroke-linejoin="round" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"/>
+							<!-- /ko -->
+						</g>
+						<!-- /ko -->
+						<!-- ko if: penConnection -->
+						<!-- ko with: penConnection -->
+						<g class="connection" data-bind="connectionControl: $data">
+							<path fill="none" stroke="#444" d="M0,0Z" stroke-width="4" stroke-linejoin="round" opacity="0" style="stroke-linejoin: round; opacity: 0;" data-bind="attr: {d: path, stroke: currentColor}"></path>
+							<path fill="none" stroke="#444" d="M0,0Z" stroke-width="1" stroke-linejoin="round" opacity="1" style="stroke-linejoin: round; opacity: 1;" data-bind="attr: {d: path, stroke: currentColor}"></path>
+							<!-- ALPHA LINE ENDINGS -->
+							<!-- ko if: connectionType().match(/^zeroTo/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+							<circle cx="8" cy="0" r="2" fill="#fff" stroke-width="1" stroke-linejoin="round" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"/>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/^oneTo/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/^onlyTo/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 6,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/^manyTo/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 5,0 l -6,5 M 5,0 l -6,-5 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/^anyTo/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 5,0 l -6,5 M 5,0 l -6,-5 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+							<circle cx="8" cy="0" r="2" fill="#fff" stroke-width="1" stroke-linejoin="round" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"/>
+							<!-- /ko -->
+							<!-- PAIRED LINE ENDINGS -->
+							<!-- ko if: connectionType() === 'multi' -->
+							<path fill="#fff" stroke-width="1" stroke-linejoin="round" opacity="1" d="m 0,0 l 10,-5 l -2.5,5 l 2.5,5 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+							<path fill="#fff" stroke-width="1" stroke-linejoin="round" opacity="1" d="m 0,0 l -10,-5 l 2.5,5 l -2.5,5 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType() === 'mixin' || connectionType() === 'inheritance' || connectionType() === 'extension' -->
+							<path fill="none"  stroke-width="1" stroke-linejoin="round" d="m 3,-5 l 5,5 l -5,5" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+							<!-- /ko -->
+							<!-- BETA LINE ENDINGS -->
+							<!-- ko if: connectionType() === 'mixin' -->
+							<path fill="none"  stroke-width="1" stroke-linejoin="round" d="m 0,0 l -3,-3 l -3,6 l -3,-6 l -3,6 " data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType() === 'reference' -->
+							<path fill="#444" d="m 0,0 l -10,-5 l 2.5,5 l -2.5,5 z" data-bind="attr: {fill: currentColor, transform: currentBetaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType() === 'inheritance' -->
+							<path fill="#fff"  stroke-width="1" stroke-linejoin="round" d="m 0,0 l -5,-3 l -5,3 l 5,3 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType() === 'extension' -->
+							<path fill="#444" d="m 0,0 l -5,-3 l -5,3 l 5,3 z" data-bind="attr: {fill: currentColor, transform: currentBetaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/ToZero$/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<circle cx="-8" cy="0" r="2" fill="#fff" stroke-width="1" stroke-linejoin="round" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"/>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/ToOne$/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/ToOnly$/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -6,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/ToMany$/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -5,0 l 6,5 M -5,0 l 6,-5 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<!-- /ko -->
+							<!-- ko if: connectionType().match(/ToAny$/) -->
+							<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -5,0 l 6,5 M -5,0 l 6,-5 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+							<circle cx="-8" cy="0" r="2" fill="#fff" stroke-width="1" stroke-linejoin="round" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"/>
+							<!-- /ko -->
+						</g>
+						<!-- /ko -->
+						<!-- /ko -->
+					</g>
+					<g id="FDG-Node-Group" class="nodeGroup" data-bind="foreach: nodes">
+						<g class="node" data-bind="nodeControl: $data">
+							<circle data-bind="attr: {cx: currentX, cy: currentY, r: radius, stroke: currentStrokeColor, fill: currentColor, 'stroke-width': currentStrokeWidth}"/>
+							<g data-bind="nodeLabel: $data" role="nodeLabel">
+								<rect x="0" y="0" rx="4" ry="4" style="fill:rgba(255, 255, 255, 0.5);stroke-width:0.5;stroke:rgba(68, 68, 68, 0.45);"></rect>
+								<!-- text x="0" y="0" font-family="sans-serif" font-size="8" fill="#444"></text -->
+								<text x="0" y="0" font-family="Helvetica" font-size="8" fill="#444"></text>
+							</g>
+						</g>
+					</g>
+				</svg>
+			</div>
+		</div>
+		<script data-main="/js/main.js" src="/js/vendor/requirejs-2.1.14.js"></script>
+	</body>
+</html>
+
+<!-- 
+
+http://www.svgbasics.com/markers.html
+
+
+// FDG LOGO
+var canvas = document.createElement('canvas');
+var context = canvas.getContext('2d');
+canvas.width = 64;
+canvas.height = 64;
+context.fillStyle = "#fff";
+context.strokeStyle = "#fff";
+context.clearRect(0, 0, 48, 48);
+context.beginPath(); context.arc(8.5, 9.5, 8, 0, Math.PI*2, true); context.closePath(); context.fill(); context.stroke();
+context.beginPath(); context.arc(12.5, 27.5, 8, 0, Math.PI*2, true); context.closePath(); context.fill(); context.stroke();
+context.beginPath(); context.arc(34.5, 43.5, 8, 0, Math.PI*2, true); context.closePath(); context.fill(); context.stroke();
+context.beginPath(); context.arc(9.5, 52.5, 8, 0, Math.PI*2, true); context.closePath(); context.fill(); context.stroke();
+context.beginPath(); context.arc(49.5, 17.5, 8, 0, Math.PI*2, true); context.closePath(); context.fill(); context.stroke();
+context.beginPath();context.moveTo(8.5,9.5);context.lineTo(49.5,17.5);context.stroke();
+context.beginPath();context.moveTo(12.5,27.5);context.lineTo(49.5,17.5);context.stroke();
+context.beginPath();context.moveTo(34.5,43.5);context.lineTo(49.5,17.5);context.stroke();
+context.beginPath();context.moveTo(34.5,43.5);context.lineTo(9.5,52.5);context.stroke();
+context.beginPath();context.moveTo(12.5,27.5);context.lineTo(9.5,52.5);context.stroke();
+jQuery('.graphContainer').append('<img src="' + canvas.toDataURL("image/png") + '">');
+
+//SNAPSHOT ICON
+var canvas = document.createElement('canvas');
+var context = canvas.getContext('2d');
+canvas.width = 64;
+canvas.height = 64;
+context.fillStyle = "#444";
+context.strokeStyle = "#444";
+context.clearRect(0, 0, 64, 64);
+context.beginPath();
+context.arc(32, 36, 8, 0, Math.PI * 2, true);
+context.closePath();
+context.fill();
+context.stroke();
+context.beginPath();
+context.moveTo(48, 36); // Start surrounding circle
+context.arc(32, 36, 16, 0, Math.PI * 2, true); // Surrounding circle
+context.moveTo(12, 56); // Move to bottom left corner start
+context.arc(12, 48, 8, Math.PI / 2, Math.PI, false); // Bottom left corner
+context.lineTo(4, 24); // Line up to upper left corner
+context.arc(12, 24, 8, Math.PI, Math.PI * 1.5, false); // Upper left corner
+context.lineTo(20, 16);
+context.arc(28, 16, 8, Math.PI, Math.PI * 1.5, false); // Upper left corner above
+context.lineTo(36, 8); // Line to upper right corner above
+context.arc(36, 16, 8, Math.PI * 1.5, 0, false); // Upper right corner above
+context.lineTo(52, 16);
+context.arc(52, 24, 8, Math.PI * 1.5, 0, false); // Upper right corner
+context.lineTo(60, 48); // Line to bottom right corner
+context.arc(52, 48, 8, 0, Math.PI / 2, false); // Bottom right corner
+context.lineTo(12, 56); // Line to bottom left corner
+context.moveTo(48, 36); // Start surrounding circle
+context.closePath();
+context.fill();
+context.stroke();
+jQuery('.graphContainer').append('<img src="' + canvas.toDataURL("image/png") + '">');
+
+-->

@@ -1,0 +1,43 @@
+<div class="connectionEdit dialogMainContent">
+<!--
+
+            "length": FDG.ko.observable(50),
+            "alpha": FDG.ko.observable(""),
+            "beta": FDG.ko.observable(""),
+            "alphaNode": null,
+            "betaNode": null,
+            "connectionType": FDG.ko.observable('zeroToMany'),
+            "hovered": FDG.ko.observable(false),
+            "anchored": FDG.ko.computed({}),
+            "selected": FDG.ko.computed({}),
+            "highlighted": FDG.ko.computed({}),
+            "magnitude": FDG.ko.computed({}),
+            "angle": FDG.ko.computed({}),
+            "alphaX": FDG.ko.computed({}),
+            "alphaY": FDG.ko.computed({}),
+            "betaX": FDG.ko.computed({}),
+            "betaY": FDG.ko.computed({}),
+            "path": FDG.ko.computed({}),
+            "currentColor": FDG.ko.computed({}),
+            "currentRotateTransform": FDG.ko.computed({}),
+            "currentAlphaTransform": FDG.ko.computed({}),
+            "currentBetaTransform": FDG.ko.computed({})
+-->
+	<!-- ko with: connection -->
+      <div class="field"><label>Alpha Node</label> <span data-bind="text: alphaLabel"></span></div>
+      <div class="field"><label>Beta Node</label> <span data-bind="text: betaLabel"></span></div>
+	<div class="field"><label>Connection Type</label> <select data-bind="value: connectionType, options: $parent.connectionTypes"></select></div>
+      <div class="field"><label>Length</label> <input type="range" min="10" max="250" step="1" data-bind="value: length, valueUpdate: ['change', 'update', 'mousemove', 'mousedown', 'mouseup']"> <span data-bind="text: length"></span></div>
+      <div class="field"><label>Magnitude</label> <span data-bind="text: magnitude().toFixed(3)"></span></div>
+      <div class="field"><label>Angle</label> <span data-bind="text: (angle() * 180 / Math.PI).toFixed(2)"></span><sup>&deg;</sup></div>
+      <div class="field"><label>Current Color</label> <input type="color" disabled data-bind="value: currentColor"></div>
+
+      <div class="field"><label>Description</label> <textarea data-bind="value: description"></textarea></div>
+
+	<!-- /ko -->
+</div>
+<div class="buttonSet">
+	<button data-bind="click: flipConnection"><span class="fa fa-exchange"></span> Flip Connection</button>
+      <button data-bind="click: closeModal"><span class="fa fa-ban"></span> Cancel</button>
+      <button data-bind="click: saveAndCloseModal"><span class="fa fa-check"></span> Done</button>
+</div>

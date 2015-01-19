@@ -1,0 +1,4 @@
+node_modules/**
+client_app/graphs/**
+client_app/thumbnails/**
+client_app/snapshots/**

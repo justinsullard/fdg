@@ -1,0 +1,24 @@
+<!-- ko foreach: nodes -->
+<div class="nodeDetails" data-bind="expandable: {}">
+	<div class="elementMenu">
+		<div class="icon icon_small zoom_icon fa fa-search" data-bind="centerOnNode: $data"></div>
+		<div class="icon icon_small edit_icon fa fa-pencil" data-bind="editNode: $data"></div>
+		<div class="icon icon_small tool_icon fa fa-terminal"></div>
+		<div class="icon icon_small trash_icon fa fa-trash"></div>
+	</div>
+	<div class="nodeTitle expander"><div class="icon icon_small node_icon static fa fa-dot-circle-o" data-bind="style: {'background-color': currentColor}"></div><div class="nodeTitleValue" data-bind="text: label, attr: {title: label}"></div></div>
+	<div class="color"><label>Color:</label><input type="color" data-bind="value: color"></div>
+	<div class="color"><label>Anchored:</label><input type="color" data-bind="value: colorAnchored"></div>
+	<div class="color"><label>Highlighted:</label><input type="color" data-bind="value: colorHighlight"></div>
+	<div class="color"><label>Selected:</label><input type="color" data-bind="value: colorSelected"></div>
+	<!-- ko foreach: properties -->
+	<div class="property" data-bind="expandable: {}">
+		<div class="elementMenu">
+			<div class="icon icon_small edit_icon"></div>
+			<div class="icon icon_small trash_icon"></div>
+		</div>
+		<div class="propertyTitle expander"><div class="icon icon_small property_icon static light"></div><span data-bind="text: name"></span> <small data-bind="text: typeShortname"></small></div>
+	</div>
+	<!-- /ko -->
+</div>
+<!-- /ko -->

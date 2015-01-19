@@ -1,0 +1,21 @@
+<div class="icon icon_small fa fa-users" data-bind="css: {'connected': connected, 'unread-chatter': unreadChatter }, click: toggleChat, attr: {'data-unread-chatter': unreadChatter}"></div>
+<!-- ko if: connected -->
+<div class="chatWindow" data-bind="css: {visible: chatVisible}">
+	<!-- <div class="userName" data-bind="text: username"></div> -->
+	<input type="text" class="userName" data-bind="value: username, enterkey: changeUsername, esckey: resetUsername" title="Edit username: enter = save; esc = cancel">
+	<!-- <div class="otherUsers" data-bind="foreach: others">
+		<div class="otherUser" data-bind="text: username"></div>
+	</div> -->
+	<div class="chatterMessages" data-bind="foreach: chatter, scrollLock: scrollLock">
+		<div class="chatterMessage">
+			<div class="chatterTime" data-bind="text: time"></div>
+			<div class="chatterUsername" data-bind="text: username"></div>
+			<div class="chatterText" data-bind="text: text"></div>
+		</div>
+	</div>
+	<input type="text" placeholder="Chat text goes here..." class="chatInput" data-bind="value: chatInput, valueUpdate:'afterkeydown', enterkey: chat" title="Chat input: enter = send;">
+</div>
+<div class="chatNotifications" data-bind="foreach: notifications">
+	<div class="chatNotification" data-bind="text: message, attr: {state: state}"></div>
+</div>
+<!-- /ko -->

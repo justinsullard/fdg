@@ -1,0 +1,19 @@
+<div class="graphList halfColumn">
+<!-- ko if: graphList -->
+<!-- ko foreach: graphList -->
+<div class="clickable" data-bind="text: $data[0], click: function() { $parent.selectGraph($data); }, css: {selected: $parent.selectedGraph() === $data}"></div>
+<!-- /ko -->
+<!-- /ko -->
+<!-- ko ifnot: graphList -->
+GraphList not loaded yet
+<!-- /ko -->
+</div>
+<div class="graphThumbnailContainer halfColumn">
+	<!-- ko if: thumbnail() && selectedGraph() -->
+		<div class="graphThumbnail" data-bind="style: {'background-image': thumbnailURL}"></div>
+	<!-- /ko -->
+</div>
+<div class="buttonSet">
+	<button data-bind="click: openGraph, attr: {disabled: !selectedGraph()}"><span class="fa fa-folder-open"></span> Open</button>
+	<button data-bind="click: closeModal"><span class="fa fa-ban"></span> Cancel</button>
+</div>

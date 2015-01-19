@@ -1,0 +1,48 @@
+<!-- ko if: graph -->
+<div class="graphLabel">
+	<div class="icon fa fa-sitemap static"></div>
+	<span data-bind="text: graph().label"></span>
+</div>
+<!-- /ko -->
+
+<div class="menu_seperator"></div>
+<div class="icon fa fa-file" title="New Graph" data-bind="newGraph: {}"></div>
+<div class="icon fa fa-folder-open" title="Open Graph" data-bind="openGraphList: {}"></div>
+<!-- ko if: graph() && !loading() -->
+<div class="icon fa fa-floppy-o" title="Save Graph" data-bind="saveGraph: {}, css: {'dirty': graph().dirty}"></div>
+<div class="icon fa fa-close" title="Close Graph" data-bind="closeGraph: {}"></div>
+
+<div class="icon fa fa-refresh disabled" title="Revert Graph" zzdata-bind="revertGraph: {}"></div>
+
+<div class="menu_seperator"></div>
+
+<!-- ko if: graph().running() -->
+<div class="icon fa fa-pause" title="Pause Graph" data-bind="pauseGraph: {}"></div>
+<!-- /ko -->
+<!-- ko ifnot: graph().running() -->
+<div class="icon fa fa-play" title="Run Graph" data-bind="runGraph: {}"></div>
+<!-- /ko -->
+<div class="icon fa fa-gears" title="Graph Settings" data-bind="graphSettings: {}"></div>
+
+<div class="menu_seperator"></div>
+
+<div class="icon fa fa-camera" title="New Snapshot" data-bind="saveSnapshot: {}"></div>
+<div class="icon fa fa-folder-o disabled" title="Open Snapshot"></div>
+
+<div class="menu_seperator"></div>
+
+<div class="icon fa fa-hand-o-up" title="Hand Tool" data-bind="handTool: {}, css: {selected: currentTool() === 'hand'}"></div>
+<div class="icon fa fa-pencil" title="Pen Tool" data-bind="penTool: {}, css: {selected: currentTool() === 'pen'}"></div>
+<div class="icon fa fa-eraser" title="Eraser Tool" data-bind="scissorTool: {}, css: {selected: currentTool() === 'scissor'}"></div>
+
+<div class="icon fa fa-magic disabled" title="Selection Tool" zzdata-bind="selectionTool: {}, css: {selected: currentTool() === 'selection'}"></div>
+
+<div class="menu_seperator"></div>
+
+<div class="icon fa fa-undo disabled" title="Undo" zzdata-bind="historyUndo: {}"></div>
+<div class="icon fa fa-repeat disabled" title="Redo" zzdata-bind="historyRedo: {}"></div>
+<div class="icon fa fa-history disabled" title="View History" zzdata-bind="historyView: {}"></div>
+<!-- /ko -->
+<!-- ko if: graph() && loading() -->
+<div class="icon fa fa-spinner fa-spin" title="Loading"></div>
+<!-- /ko -->

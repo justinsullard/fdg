@@ -1,0 +1,62 @@
+<g class="connection" data-bind="connectionControl: $data">
+	<path fill="none" stroke="#444" d="M0,0Z" stroke-width="4" stroke-linejoin="round" opacity="0" style="stroke-linejoin: round; opacity: 0;" data-bind="attr: {d: path, stroke: currentColor}"></path>
+	<path fill="none" stroke="#444" d="M0,0Z" stroke-width="1" stroke-linejoin="round" opacity="1" style="stroke-linejoin: round; opacity: 1;" data-bind="attr: {d: path, stroke: currentColor}"></path>
+	<!-- ALPHA LINE ENDINGS -->
+	<!-- ko if: connectionType().match(/^zeroTo/) -->
+	<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+	<circle cx="8" cy="0" r="2" fill="#fff" stroke-width="1" stroke-linejoin="round" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"/>
+	<!-- /ko -->
+	<!-- ko if: connectionType().match(/^oneTo/) -->
+	<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+	<!-- /ko -->
+	<!-- ko if: connectionType().match(/^onlyTo/) -->
+	<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+	<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 6,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+	<!-- /ko -->
+	<!-- ko if: connectionType().match(/^manyTo/) -->
+	<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 5,0 l -6,5 M 5,0 l -6,-5 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+	<!-- /ko -->
+	<!-- ko if: connectionType().match(/^anyTo/) -->
+	<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M 5,0 l -6,5 M 5,0 l -6,-5 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+	<circle cx="8" cy="0" r="2" fill="#fff" stroke-width="1" stroke-linejoin="round" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"/>
+	<!-- /ko -->
+	<!-- PAIRED LINE ENDINGS -->
+	<!-- ko if: connectionType() === 'multi' -->
+	<path fill="#fff" stroke-width="1" stroke-linejoin="round" opacity="1" d="m 0,0 l 10,-5 l -2.5,5 l 2.5,5 z" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+	<path fill="#fff" stroke-width="1" stroke-linejoin="round" opacity="1" d="m 0,0 l -10,-5 l 2.5,5 l -2.5,5 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+	<!-- /ko -->
+	<!-- ko if: connectionType() === 'mixin' || connectionType() === 'inheritance' || connectionType() === 'extension' -->
+	<path fill="none"  stroke-width="1" stroke-linejoin="round" d="m 3,-5 l 5,5 l -5,5" data-bind="attr: {stroke: currentColor, transform: currentAlphaTransform}"></path>
+	<!-- /ko -->
+	<!-- BETA LINE ENDINGS -->
+	<!-- ko if: connectionType() === 'mixin' -->
+	<path fill="none"  stroke-width="1" stroke-linejoin="round" d="m 0,0 l -3,-3 l -3,6 l -3,-6 l -3,6 " data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+	<!-- /ko -->
+	<!-- ko if: connectionType() === 'reference' -->
+	<path fill="#444" d="m 0,0 l -10,-5 l 2.5,5 l -2.5,5 z" data-bind="attr: {fill: currentColor, transform: currentBetaTransform}"></path>
+	<!-- /ko -->
+	<!-- ko if: connectionType() === 'inheritance' -->
+	<path fill="#fff"  stroke-width="1" stroke-linejoin="round" d="m 0,0 l -5,-3 l -5,3 l 5,3 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+	<!-- /ko -->
+	<!-- ko if: connectionType() === 'extension' -->
+	<path fill="#444" d="m 0,0 l -5,-3 l -5,3 l 5,3 z" data-bind="attr: {fill: currentColor, transform: currentBetaTransform}"></path>
+	<!-- /ko -->
+	<!-- ko if: connectionType().match(/ToZero$/) -->
+	<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+	<circle cx="-8" cy="0" r="2" fill="#fff" stroke-width="1" stroke-linejoin="round" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"/>
+	<!-- /ko -->
+	<!-- ko if: connectionType().match(/ToOne$/) -->
+	<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+	<!-- /ko -->
+	<!-- ko if: connectionType().match(/ToOnly$/) -->
+	<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -3,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+	<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -6,-3 l 0,6 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+	<!-- /ko -->
+	<!-- ko if: connectionType().match(/ToMany$/) -->
+	<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -5,0 l 6,5 M -5,0 l 6,-5 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+	<!-- /ko -->
+	<!-- ko if: connectionType().match(/ToAny$/) -->
+	<path fill="none" stroke-width="1" stroke-linejoin="round" opacity="1" d="M -5,0 l 6,5 M -5,0 l 6,-5 z" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"></path>
+	<circle cx="-8" cy="0" r="2" fill="#fff" stroke-width="1" stroke-linejoin="round" data-bind="attr: {stroke: currentColor, transform: currentBetaTransform}"/>
+	<!-- /ko -->
+</g>
