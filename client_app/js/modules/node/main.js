@@ -430,10 +430,10 @@ define(["FDG"], function (FDG) {
                 nodes[i].velocity.add(nodes[i].forces.multiply(settings.speed)).multiply(settings.damping);
                 nodes[i].point.add(nodes[i].velocity.clone().multiply(settings.speed));
             }
-            nodes[i].point.x = Math.max(nodes[i].point.x, nodes[i].radius());
-            nodes[i].point.x = Math.min(nodes[i].point.x, settings.width - nodes[i].radius());
-            nodes[i].point.y = Math.max(nodes[i].point.y, nodes[i].radius());
-            nodes[i].point.y = Math.min(nodes[i].point.y, settings.height - nodes[i].radius());
+            nodes[i].point.x = Math.max(nodes[i].point.x, nodes[i].radius()) || 0;
+            nodes[i].point.x = Math.min(nodes[i].point.x, settings.width - nodes[i].radius()) || 0;
+            nodes[i].point.y = Math.max(nodes[i].point.y, nodes[i].radius()) || 0;
+            nodes[i].point.y = Math.min(nodes[i].point.y, settings.height - nodes[i].radius()) || 0;
             nodes[i].forces.zero();
         }
         priv.renderIndex(priv.renderIndex() + 1);

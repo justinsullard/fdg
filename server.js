@@ -69,6 +69,12 @@
 
         fileRoot = path.join(process.cwd(), appPath);
 
+        // Ensure data folders are present
+        ["/graphs", "/thumbnails", "/snapshots", "/snapshots/thumbnails"].forEach(function (p) {
+            var dir = path.join(fileRoot, p);
+            if (!fs.existsSync(dir)) { fs.mkdirSync(dir); }
+        });
+
         function serveFile(filename, res, code) {
             var filestream;
             code = code || 200;
@@ -177,16 +183,17 @@
                 if (req.method === "POST") {
                     req.on('data', function (data) {
                         reqBody += data;
+                    }).on('end', function () {
                         formData = qs.parse(reqBody);
                         switch (formData.action) {
                         case "saveGraph":
                             filename = path.join(fileRoot, "/graphs/" + formData.label);
-                            fs.writeFile(filename, formData.graph, "utf8");
+                            fs.writeFileSync(filename, formData.graph, "utf8");
                             filename = path.join(fileRoot, "/thumbnails/" + formData.label);
                             if (formData.thumbnail) {
                                 try {
                                     buffer = new Buffer(formData.thumbnail, 'base64');
-                                    fs.writeFile(filename, buffer);
+                                    fs.writeFileSync(filename, buffer);
                                 } catch (e) {
                                     console.error("Error writing thumbnail file", e);
                                 }
@@ -202,12 +209,12 @@
                         case "saveSnapshot":
                             filename = path.join(fileRoot, "/snapshots/" + formData.label);
                             buffer = new Buffer(formData.snapshot, 'base64');
-                            fs.writeFile(filename, buffer);
+                            fs.writeFileSync(filename, buffer);
                             filename = path.join(fileRoot, "/snapshots/thumbnails/" + formData.label);
                             if (formData.thumbnail) {
                                 try {
                                     buffer = new Buffer(formData.thumbnail, 'base64');
-                                    fs.writeFile(filename, buffer);
+                                    fs.writeFileSync(filename, buffer);
                                 } catch (e) {
                                     console.error("Error writing thumbnail file", e);
                                 }
@@ -228,7 +235,7 @@
                             res.write(JSON.stringify(ret));
                             res.end();
                             break;
-                        }
+                        }                        
                     });
                 } else {
                     formData = url.parse(req.url, true).query;

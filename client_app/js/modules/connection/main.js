@@ -373,8 +373,8 @@ define(["FDG"], function (FDG) {
             alpha = getConnections(connections[i].alphaNode).length;
             beta = getConnections(connections[i].betaNode).length;
             len = FDG.util.graph.setting("orbit");
-            len += alpha * connections[i].alphaNode.radius() / 2;
-            len += beta * connections[i].betaNode.radius() / 2;
+            len += alpha * connections[i].alphaNode.radius() / 2 || 0;
+            len += beta * connections[i].betaNode.radius() / 2 || 0;
             // 3 / 4; 4 / 5
             // len /= magFact;
             connections[i].length(len);
