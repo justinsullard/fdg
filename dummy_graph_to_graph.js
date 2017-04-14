@@ -14,6 +14,10 @@ const guid = (() => {
 })();
 /* eslint-enable no-bitwise, prefer-template, space-infix-ops, no-mixed-operators */
 
+function showConnections(lbl) {
+    return FDG.util.connection.ofNode(FDG.util.node.search(lbl)[0]).map(c => `${c.alphaNode.label()} -> ${c.betaNode.label()}`).sort();
+}
+
 function generateGraph(source, name) {
     const nmap = {};
     const graph = {

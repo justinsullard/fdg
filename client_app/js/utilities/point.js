@@ -32,15 +32,15 @@ define(["util"], function (util) {
     };
     Point.prototype.add = function (p) {
         if (p instanceof Point) {
-            this.x += p.x;
-            this.y += p.y;
+            this.x += util.number.getAs(p.x);
+            this.y += util.number.getAs(p.y);
         }
         return this;
     };
     Point.prototype.subtract = function (p) {
         if (p instanceof Point) {
-            this.x -= p.x;
-            this.y -= p.y;
+            this.x -= util.number.getAs(p.x);
+            this.y -= util.number.getAs(p.y);
         }
         return this;
     };

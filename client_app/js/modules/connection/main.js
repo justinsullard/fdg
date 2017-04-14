@@ -52,7 +52,8 @@ define(["FDG"], function (FDG) {
             "description": FDG.ko.observable(""),
             "alphaNode": null,
             "betaNode": null,
-            "connectionType": FDG.ko.observable('oneToMany'), // Defaulting to assume one to many relationships because that's the most frequently used.
+            // "connectionType": FDG.ko.observable('oneToMany'), // Defaulting to assume one to many relationships because that's the most frequently used.
+            "connectionType": FDG.ko.observable('reference'), // Defaulting to assume reference because that's what I'm currently mapping
             "hovered": FDG.ko.observable(false),
             "multiTypes": FDG.ko.observableArray([]),
             "anchored": FDG.ko.computed({

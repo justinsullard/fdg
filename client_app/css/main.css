@@ -182,7 +182,7 @@ body {
     top: 32px;
     right: 0;
     bottom: 0;
-    width: 300px;
+    width: 350px;
     background-color: #ccc;
     /*box-shadow: -1px 0 1px rgba(68, 68, 68, 0.25);*/
     -webkit-transition: all .5s;
@@ -191,7 +191,7 @@ body {
     transition: all .5s;
 }
 .nodeListHidden .nodeListContainer {
-    right: -284px;
+    right: -334px;
 }
 
 .nodeListToggle {
@@ -249,7 +249,7 @@ body:not(.nodeListHidden) .nodeListToggle .showit {
 
 .nodeDetails {
     background-color: #eee;
-    width: 280px;
+    width: 330px;
     margin: 2px;
     height: 16px;
     overflow: hidden;
@@ -271,7 +271,7 @@ body:not(.nodeListHidden) .nodeListToggle .showit {
 }
 .nodeTitle {
     height: 16px;
-    font-size: 12px;
+    font-size: 10px;
     line-height: 16px;
     font-weight: 700;
     overflow: hidden;
@@ -360,7 +360,7 @@ body:not(.nodeListHidden) .nodeListToggle .showit {
     z-index: 0;
     position: absolute;
     top: 32px;
-    right: 300px;
+    right: 350px;
     /*bottom: 0;*/
     bottom: 16px;
     left: 0;
