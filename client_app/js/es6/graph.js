@@ -1,6 +1,6 @@
-import UUID from './uuid';
+const UUID = require('./uuid');
 
-export function Graph({
+function Graph({
     guid = UUID(),
     label = `New Graph ${new Date().toISOString()}`,
     notes = '',
@@ -35,6 +35,7 @@ export function Graph({
         connections
     };
 }
-export function resize(g) {
 
-}
+module.exports = {
+    Graph
+};

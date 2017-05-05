@@ -13,12 +13,22 @@ function elSvg(tag = 'svg', props = {}, children = []) {
     return el;
 }
 
-export const Svg = elSvg.bind(null, 'svg');
-export const G = elSvg.bind(null, 'g');
-export const Circle = elSvg.bind(null, 'circle');
-export const Rect = elSvg.bind(null, 'rect');
-export const Text = elSvg.bind(null, 'text');
-export const Path = elSvg.bind(null, 'path');
+const Svg = elSvg.bind(null, 'svg');
+const G = elSvg.bind(null, 'g');
+const Circle = elSvg.bind(null, 'circle');
+const Rect = elSvg.bind(null, 'rect');
+const Text = elSvg.bind(null, 'text');
+const Path = elSvg.bind(null, 'path');
+
+module.exports = {
+    elSvg,
+    Svg,
+    G,
+    Circle,
+    Rect,
+    Text,
+    Path
+};
 
 /*
 
