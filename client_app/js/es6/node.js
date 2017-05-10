@@ -1,4 +1,4 @@
-const UUID = require('./uuid');
+const { UUID } = require('./uuid');
 const {
     Vector,
     VRand
@@ -6,7 +6,7 @@ const {
 
 const NODE_TYPES = ['model', 'view', 'controller', 'lookup', 'module', 'config'];
 function Node({
-    guid = UUID(),
+    uuid = UUID(),
     label = 'New Node',
     description = '',
     type = 'model',
@@ -16,6 +16,7 @@ function Node({
     color_anchored = '#aaaaaa',
     color_highlight = '#aaaaff',
     color_selected = '#f5f5f5',
+    anchored = false,
     selected = false,
     highlighted = false,
     forces = Vector(),
@@ -23,7 +24,7 @@ function Node({
     group = null
 }) {
     return {
-        guid,
+        uuid,
         label,
         description,
         type: NODE_TYPES.indexOf(type) ? type : NODE_TYPES[0],
@@ -33,6 +34,7 @@ function Node({
         color_anchored,
         color_highlight,
         color_selected,
+        anchored,
         selected,
         highlighted,
         forces,

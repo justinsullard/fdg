@@ -1,7 +1,7 @@
-const UUID = require('./uuid');
+const { UUID } = require('./uuid');
 
 function Graph({
-    guid = UUID(),
+    uuid = UUID(),
     label = `New Graph ${new Date().toISOString()}`,
     notes = '',
     width = 1600,
@@ -18,7 +18,7 @@ function Graph({
     connections = []
 }) {
     return {
-        guid,
+        uuid,
         label,
         notes,
         width,

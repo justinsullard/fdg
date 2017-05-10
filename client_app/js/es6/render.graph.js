@@ -1,11 +1,11 @@
 const { El, } = require('./vdom.js');
 const { renderNode } = require("./render.node.js");
 
-const renderConnection = ({guid}) => El('g', { guid, class: 'fdg-svg-connection' });
+const renderConnection = ({uuid}) => El('g', { uuid, class: 'fdg-svg-connection' });
 
 const renderGraph = (graph) => {
     const {
-        guid,
+        uuid,
         data: {
             width,
             height
@@ -13,8 +13,8 @@ const renderGraph = (graph) => {
         visible
     } = graph;
     // console.debug(graph);
-    const connections = Array.from(visible).filter(c => !c.data);
-    const nodes = Array.from(visible).filter(c => c.data);
+    const connections = Array.from(visible).filter(c => c.type === 'connection');
+    const nodes = Array.from(visible).filter(c => c.type !== 'connection');
 
     // const connections = visible.filter(c => !c.data);
     // const nodes = visible.filter(c => c.data);
@@ -22,7 +22,7 @@ const renderGraph = (graph) => {
         'svg',
         {
             class: 'fdg-svg',
-            guid: guid,
+            uuid: uuid,
             height,
             width,
             viewbox: `0 0 ${width} ${height}`

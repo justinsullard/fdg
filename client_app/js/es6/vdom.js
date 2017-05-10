@@ -65,9 +65,7 @@ const createElement = (doc, n) => {
 const changed = (a, b) => typeof a !== typeof b || typeof a === 'string' && a !== b || a.type !== b.type;
 
 const renderSVG = (doc, p, n, o, i = 0) => {
-    if (!p) {
-        return console.warn('No parent element provided to renderSVG')
-    }
+    if (!p) { return console.warn('No parent element provided to renderSVG') }
     if (!o) { return p.appendChild(createElementSVG(n)); }
     if (!n) { return p.removeChild(p.childNodes[i]); }
     if (changed(n, o)) { return p.replaceChild(p.childNodes[i], createElementSVG(n)); }
@@ -80,6 +78,7 @@ const renderSVG = (doc, p, n, o, i = 0) => {
 };
 
 const render = (doc, p, n, o, i = 0) => {
+    if (!p) { return console.warn('No parent element provided to render') }
     if (!o) { return p.appendChild(createElement(doc, n)); }
     if (!n) { return p.removeChild(p.childNodes[i]); }
     if (changed(n, o)) { return p.replaceChild(p.childNodes[i], createElement(doc, n)); }

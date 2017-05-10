@@ -51,4 +51,4 @@ const emitter = {
     }
 };
 
-module.exports = emitter;
+module.exports = { emitter };

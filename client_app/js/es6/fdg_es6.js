@@ -35,7 +35,7 @@ function graphTree(graph) {
 
 class Graph {
     constructor({
-        guid = UUID(),
+        uuid = UUID(),
         label = `New Graph ${new Date().toISOString()}`,
         notes = '',
         width = 1600,
@@ -51,7 +51,7 @@ class Graph {
         groups = [],
         connections = []
     }) {
-        this.guid = guid;
+        this.uuid = uuid;
         this.label = label;
         this.notes = notes;
         this.width = width;
@@ -70,9 +70,9 @@ class Graph {
         this.virtualConnections = [];
         this.spreadingPairs = [];
         this.lastStep = Date.now();
-        // Build guid indexes
+        // Build uuid indexes
         function indexer(m, c) {
-            m[c.guid] = c;
+            m[c.uuid] = c;
             return m;
         }
         this.indexNodes = this.nodes.reduce(indexer, {});
@@ -93,46 +93,46 @@ class Graph {
         // compute spreading pairs
         this.computePairs();
     }
-    getNode(guid) { return this.indexNodes[guid]; }
-    getGroup(guid) { return this.indexGroups[guid]; }
-    getConnection(guid) { return this.indexConnections[guid]; }
+    getNode(uuid) { return this.indexNodes[uuid]; }
+    getGroup(uuid) { return this.indexGroups[uuid]; }
+    getConnection(uuid) { return this.indexConnections[uuid]; }
     addNode(node) {
         if (this.nodes.indexOf(node) > -1) { return; }
         this.nodes.push(node);
-        this.indexNodes[node.guid] = node;
+        this.indexNodes[node.uuid] = node;
         this.computePairs();
     }
     removeNode(node) {
         const i = this.nodes.indexOf(node);
         if (i < 0) { return; }
         this.nodes.splice(i, 1);
-        delete this.indexNodes[node.guid];
+        delete this.indexNodes[node.uuid];
         this.computePairs();
     }
     addGroup(group) {
         if (this.groups.indexOf(group) > -1) { return; }
         this.groups.push(group);
-        this.indexGroups[group.guid] = group;
+        this.indexGroups[group.uuid] = group;
         this.computePairs();
     }
     removeGroup(group) {
         const i = this.groups.indexOf(group);
         if (i < 0) { return; }
         this.groups.splice(i, 1);
-        delete this.indexGroups[group.guid];
+        delete this.indexGroups[group.uuid];
         this.computePairs();
     }
     addConnection(connection) {
         if (this.connections.indexOf(connection) > -1) { return; }
         this.connections.push(connection);
-        this.indexConnections[connection.guid] = connection;
+        this.indexConnections[connection.uuid] = connection;
         this.computePairs();
     }
     removeConnection(connection) {
         const i = this.connections.indexOf(connection);
         if (i < 0) { return; }
         this.connections.splice(i, 1);
-        delete this.indexConnections[connection.guid];
+        delete this.indexConnections[connection.uuid];
         this.computePairs();
     }
     computePairs() {
@@ -177,7 +177,7 @@ class Graph {
     }
     toJSON() {
         return {
-            guid: this.guid,
+            uuid: this.uuid,
             label: this.label,
             notes: this.notes,
             width: this.width,
@@ -204,7 +204,7 @@ const nodeTypes = ['model', 'view', 'controller', 'lookup', 'module', 'config', 
 class Node {
     static get nodeTypes() { return nodeTypes; }
     constructor({
-        guid = UUID(),
+        uuid = UUID(),
         label = 'New Node',
         description = '',
         nodeType = 'model',
@@ -221,7 +221,7 @@ class Node {
         // properties = [],
         group = null
     }, graph) {
-        this.guid = guid;
+        this.uuid = uuid;
         this.label = label;
         this.description = description;
         this.nodeType = nodeTypes.indexOf(nodeType) ? nodeType : 'model';
@@ -254,7 +254,7 @@ class Node {
     }
     toJSON() {
         return {
-            guid: this.guid,
+            uuid: this.uuid,
             label: this.label,
             description: this.description,
             nodeType: this.nodeType,
@@ -268,7 +268,7 @@ class Node {
             highlighted: this.highlighted,
             forces: this.forces,
             velocity: this.velocity,
-            group: this.group ? this.group.guid : null
+            group: this.group ? this.group.uuid : null
         };
     }
 }
@@ -330,7 +330,7 @@ class Group extends Node {
     }
     toJSON() {
         return {
-            guid: this.guid,
+            uuid: this.uuid,
             label: this.label,
             description: this.description,
             nodeType: this.nodeType,
@@ -344,9 +344,9 @@ class Group extends Node {
             highlighted: this.highlighted,
             forces: this.forces,
             velocity: this.velocity,
-            group: this.group ? this.group.guid : null,
+            group: this.group ? this.group.uuid : null,
             collapsed: this.collapsed,
-            children: this.children.map(c => c.guid)
+            children: this.children.map(c => c.uuid)
         };
     }
 }

@@ -1,13 +1,14 @@
-const UUID = require('./uuid');
+const { UUID } = require('./uuid');
 
-const {Graph} = require('./graph.js');
-const {Group} = require('./group');
-const {Node} = require('./node.js');
-const {Connection} = require('./connection.js');
+const { Graph } = require('./graph.js');
+const { Group } = require('./group');
+const { Node } = require('./node.js');
+const { Connection } = require('./connection.js');
 
-function Branch(o) {
+function Branch(o, type) {
     return {
-        guid: o.guid,
+        type,
+        uuid: o.uuid,
         data: o,
         group: o.group || null,
         children: new Set(),
@@ -21,8 +22,8 @@ function updateVisual(tree, leaf) {
         tree.children.forEach(tree.updateVisual);
         // connection updates here
         tree.connections.forEach(conn => {
-            conn.v_alpha = tree.getVisibleRoot(conn.alpha);
-            conn.v_beta = tree.getVisibleRoot(conn.beta);
+            conn.v_alpha = tree.getVisibleRoot(conn.alpha, conn);
+            conn.v_beta = tree.getVisibleRoot(conn.beta, conn);
             if (conn.v_alpha !== conn.v_beta) {
                 tree.visible.add(conn);
             }
@@ -36,18 +37,18 @@ function updateVisual(tree, leaf) {
     leaf.children.forEach(tree.updateVisual);
 }
 
-function getVisibleRoot(tree, leaf) {
+function getVisibleRoot(tree, leaf, src) {
     if (!leaf.data.group || tree.visible.has(leaf)) { return leaf; }
-    return tree.getVisibleRoot(leaf.group);
+    return tree.getVisibleRoot(leaf.group, leaf);
 }
 
 function addGroup(tree, cfg) {
-    if (tree.groups.get(cfg.guid)) { return; }
+    if (tree.groups.get(cfg.uuid)) { return; }
     const group = Group(cfg);
     const branch = Branch(group);
     tree.data.groups.push(group);
-    tree.groups.set(branch.guid, branch);
-    tree.index.set(branch.guid, branch);
+    tree.groups.set(branch.uuid, branch);
+    tree.index.set(branch.uuid, branch);
     if (group.group) {
         branch.group = tree.index.get(group.group);
     } else {
@@ -60,7 +61,7 @@ function addGroup(tree, cfg) {
         if (prev.data.type === 'group') {
             prev.data.children.splice(prev.data.children.indexOf(child), 1);
         }
-        leaf.data.group = group.guid;
+        leaf.data.group = group.uuid;
         leaf.group = branch;
         branch.children.add(leaf);
     });
@@ -72,31 +73,33 @@ function Tree(cfg) {
     graph.groups = graph.groups.map(Group);
     graph.nodes = graph.nodes.map(Node);
     graph.connections = graph.connections.map(Connection);
-    const tree = Branch(graph);
-    tree.groups = new Map(graph.groups.map(o => [o.guid, Branch(o)]));
-    tree.groups.forEach((guid, group) => {
+    const tree = Branch(graph, 'graph');
+    tree.groups = new Map(graph.groups.map(o => [o.uuid, Branch(o, 'group')]));
+    tree.groups.forEach((group, uuid) => {
         if (!group.group) { return; }
         group.group = tree.groups.get(group.group);
         group.group.children.add(group);
     });
-    tree.nodes = new Map(graph.nodes.map(o => [o.guid, Branch(o)]));
-    tree.nodes.forEach((guid, node) => {
+    tree.nodes = new Map(graph.nodes.map(o => [o.uuid, Branch(o, 'node')]));
+    tree.nodes.forEach((node, uuid) => {
         if (!node.group) { return; }
         node.group = tree.groups.get(node.group);
         node.group.children.add(node);
     });
     tree.index = new Map([ ...tree.groups, ...tree.nodes ]);
     tree.connections = new Map(graph.connections.map(o => [
-        o.guid,
+        o.uuid,
         {
+            type: 'connection',
+            data: o,
             alpha: tree.index.get(o.alpha),
             beta: tree.index.get(o.beta),
             v_alpha: tree.index.get(o.alpha),
             v_beta: tree.index.get(o.beta)
         }
     ])),
-    graph.nodes.filter(n => !n.group).forEach(n => tree.children.add(tree.index.get(n.guid)));
-    graph.groups.filter(n => !n.group).forEach(n => tree.children.add(tree.index.get(n.guid)));
+    graph.nodes.filter(n => !n.group).forEach(n => tree.children.add(tree.index.get(n.uuid)));
+    graph.groups.filter(n => !n.group).forEach(n => tree.children.add(tree.index.get(n.uuid)));
 
     tree.visible = new Set();
 

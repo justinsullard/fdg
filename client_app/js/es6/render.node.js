@@ -49,13 +49,13 @@ const sizeText = (txt) => {
 };
 
 const renderNode = (node) => {
-    const { guid, data: { point: { x, y }, radius, label, color } } = node;
+    const { uuid, data: { point: { x, y }, radius, label, color } } = node;
     const cache = sizeText(label);
     return El(
         'g',
         {
             class: 'fdg-svg-node',
-            guid: guid,
+            uuid: uuid,
             // style: `transform: translate3D(${x}px, ${y}px, 0);`
             transform: `translate(${x} ${y})`
         },

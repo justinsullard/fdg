@@ -1,8 +1,8 @@
-const UUID = require('./uuid');
+const { UUID } = require('./uuid');
 
 const CONNECTION_TYPES = ['reference', 'oneToOne', 'oneToMany', 'manyToMany', 'manyToOne'];
 function Connection({
-    guid = UUID(),
+    uuid = UUID(),
     label = 'New Connection',
     description = '',
     type = CONNECTION_TYPES[0],
@@ -16,7 +16,7 @@ function Connection({
     beta = null
 }) {
     return {
-        guid,
+        uuid,
         label,
         description,
         type: CONNECTION_TYPES.indexOf(type) ? type : CONNECTION_TYPES[0],
