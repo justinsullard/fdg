@@ -1,0 +1,64 @@
+<template>
+
+</template>
+
+<script type="text/javascript">
+(() => {
+
+const {
+    render,
+    El
+} = require('./vdom.js');
+const { renderGraph, sizer } = require('./render.graph.js');
+
+var bob = require('./bob.js');
+
+class FdgSvg extends HTMLElement {
+    constructor() {
+        console.debug('FdgSvg constructor', this);
+    }
+    render() {
+        const next = renderGraph(this._data);
+        render(document, this, next, this._prev);
+        this._prev = next;
+    }
+    created() {
+        console.debug('FdgSvg created', this);
+    }
+    attached() {
+        console.debug('FdgSvg attached', this);
+    }
+    detached() {
+        console.debug('FdgSvg detached', this);
+    }
+    adopted() {
+        console.debug('FdgSvg adopted', this);
+    }
+    createdCallback() {
+        console.debug('FdgSvg createdCallback', this);
+        this.render = this.render.bind(this);
+        this._data = bob;
+    }
+    attachedCallback() {
+        console.debug('FdgSvg attachedCallback', this);
+        process.on('fdg:render', this.render);
+        this.innerHTML = '';
+    }
+    detachedCallback() {
+        console.debug('FdgSvg detachedCallback', this);
+        process.removeListener('fdg:render', this.render);
+        this._prev = null;
+    }
+    adoptedCallback() {
+        console.debug('FdgSvg adoptedCallback', this);
+    }
+    attributeChangedCallback(attr, oldVal, newVal) {
+        console.debug('FdgSvg attributeChangedCallback', this, { attr, oldVal, newVal });
+    }
+}
+
+document.registerElement('fdg-svg', FdgSvg);
+
+})();
+
+</script>

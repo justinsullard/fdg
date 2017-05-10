@@ -1,23 +1,31 @@
 const { El, uProps } = require('./vdom.js');
 
+const FONT_SIZE = 10;
+
 const txtCache = new Map();
 const txtCacheTime = new Map();
 
 const svgEl = (tag, props = {}) => {
-    console.debug('svgEl');
     const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
     uProps(el, props);
     return el;
 };
 
-const sizer = svgEl('svg', { width: 1000, height: 1000, viewbox: '0 0 1000 1000' });
+const sizer = svgEl('svg', {
+    width: 0,
+    height: 0,
+    viewbox: '0 0 1000 1000'
+});
 
 const sizeText = (txt) => {
-    const now = Date.now();
     let cache = txtCache.get(txt);
     if (!cache) {
         const text = svgEl('text', {
-            x: 0, y: 0, 'font-family': 'monospace', 'font-size': 10, fill: '#000'
+            x: 0,
+            y: 20,
+            class: 'fdg-svg-node-label-text',
+            'font-size': FONT_SIZE,
+            'alignment-baseline': 'middle'
         });
         text.appendChild(document.createTextNode(txt));
         sizer.appendChild(text);
@@ -28,16 +36,15 @@ const sizeText = (txt) => {
             width,
             height,
             tx: width / -2,
-            ty: 2.5, // Yes, this is correct
+            ty: 0,
             rx: (width / -2) - 2,
-            ry: (height / -2) - 3,
-            rwidth: width + 2,
+            ry: (height / -2) - 2,
+            rwidth: width + 4,
             rheight: height + 4
         };
         txtCache.set(txt, cache);
-        console.debug('sizeText', { txt, now, width, height, text, sizer, bbox });
     }
-    txtCacheTime.set(txt, now);
+    txtCacheTime.set(txt, Date.now());
     return cache;
 };
 
@@ -48,14 +55,16 @@ const renderNode = (node) => {
         'g',
         {
             class: 'fdg-svg-node',
-            guid: guid
+            guid: guid,
+            // style: `transform: translate3D(${x}px, ${y}px, 0);`
+            transform: `translate(${x} ${y})`
         },
         El(
             'circle',
             {
                 class: 'fdg-svg-node-circle',
-                cx: x,
-                cy: y,
+                cx: 0,
+                cy: 0,
                 r: radius,
                 stroke: '#000000',
                 fill: color,
@@ -71,8 +80,8 @@ const renderNode = (node) => {
                 'rect',
                 {
                     class: 'fdg-svg-node-label-rect',
-                    x: x + cache.rx,
-                    y: y + cache.ry,
+                    x: cache.rx,
+                    y: cache.ry,
                     rx: 4,
                     ry: 4,
                     width: cache.rwidth,
@@ -83,8 +92,9 @@ const renderNode = (node) => {
                 'text',
                 {
                     class: 'fdg-svg-node-label-text',
-                    x: x + cache.tx,
-                    y: y + cache.ty
+                    'font-size': FONT_SIZE,
+                    'text-anchor': 'middle',
+                    'alignment-baseline': 'middle'
                 },
                 label
             )
@@ -92,4 +102,6 @@ const renderNode = (node) => {
     );
 };
 
-module.exports = { renderNode, sizer };
+document.body.appendChild(sizer);
+
+module.exports = { renderNode, sizer, sizeText };

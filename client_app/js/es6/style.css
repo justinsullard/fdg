@@ -1,3 +1,6 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
 .fdg-svg-node {
     user-select: none;
     cursor: pointer;
@@ -13,11 +16,23 @@
 .fdg-svg-node-label-rect {
     fill: rgba(255, 255, 255, 0.5);
     stroke: rgba(68, 68, 68, 0.45);
-    stroke-width: 0.5;
+    stroke-width: 1;
     height: 13;
 }
 .fdg-svg-node-label-text {
-    font-family: monospace;
-    font-size: 10;
+    font-family: 'Roboto Mono', monospace;
     fill: #444;
+}
+.fdg-svg-node:hover .fdg-svg-node-circle {
+    stroke: rgba(0, 0, 0, 1);
+}
+.fdg-svg-node:hover .fdg-svg-node-label-rect {
+    stroke: rgba(0, 0, 0, 1);
+}
+.fdg-svg-node:hover .fdg-svg-node-label-text {
+    fill: #000;
+}
+
+.fdg-svg-node-circle, .fdg-svg-node-label-rect, .fdg-svg-node-label-text {
+    transition: all 450ms;
 }

@@ -15,8 +15,10 @@ var bob = Tree({
     "label": "Graph 2017_04_26T04_08_56_831Z",
     "guid": "55530c3f-9546-4226-b42a-212a9e204abb",
     "notes": "",
-    "width": 1600,
-    "height": 1600,
+    // "width": 1600,
+    // "height": 1600,
+    "width": 800,
+    "height": 800,
     "orbit": 60,
     "radius": 10,
     "speed": 0.5,
@@ -145,7 +147,8 @@ var bob = Tree({
         "properties": []
     }, {
         "guid": "a9a4578c-164e-4986-9e1d-8ea6b3baad48",
-        "label": "New Node 7",
+        // "label": "New Node 7",
+        "label": "N is a good letter N",
         "description": "",
         "type": "model",
         "radius": 10,
