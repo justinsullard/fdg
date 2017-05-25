@@ -34,7 +34,6 @@
         }
         detachedCallback() {
             emitter.off('fdg:render', this.render);
-            this._prev = null;
         }
         attributeChangedCallback(attr, oldVal, newVal) {
             console.debug('FdgSvg attributeChangedCallback', this, { attr, oldVal, newVal });
