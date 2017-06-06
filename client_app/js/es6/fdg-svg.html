@@ -5,19 +5,14 @@
         render,
         El
     } = require('./vdom.js');
-    const { renderGraph, sizer } = require('./render.graph.js');
-    const { emitter } = require('./emitter.js');
+    const { renderGraph } = require('./render.graph.js');
     const { fdg } = require('./fdg.js');
 
 
     class FdgSvg extends HTMLElement {
         createdCallback() {
-            console.debug('FdgSvg createdCallback', this);
-            // TODO: perhaps create render function here...
-            // TODO: add correct method of acquiring graph data
             let prev = null;
-            this.render = () => {
-                const { tree } = fdg;
+            this.render = (tree) => {
                 let next;
                 if (!tree) {
                     next = El('h1', {}, 'No graph loaded');
@@ -29,14 +24,11 @@
             };
         }
         attachedCallback() {
-            emitter.on('fdg:render', this.render);
             this.innerHTML = '';
+            this.subscription = fdg.subscribe(this.render);
         }
         detachedCallback() {
-            emitter.off('fdg:render', this.render);
-        }
-        attributeChangedCallback(attr, oldVal, newVal) {
-            console.debug('FdgSvg attributeChangedCallback', this, { attr, oldVal, newVal });
+            this.subscription();
         }
     }
 

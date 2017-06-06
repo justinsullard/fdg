@@ -19,7 +19,7 @@ function Connection({
         uuid,
         label,
         description,
-        type: CONNECTION_TYPES.indexOf(type) ? type : CONNECTION_TYPES[0],
+        type: CONNECTION_TYPES.includes(type) ? type : CONNECTION_TYPES[0],
         length,
         color,
         color_highlight,

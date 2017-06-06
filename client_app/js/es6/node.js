@@ -27,7 +27,7 @@ function Node({
         uuid,
         label,
         description,
-        type: NODE_TYPES.indexOf(type) ? type : NODE_TYPES[0],
+        type: NODE_TYPES.includes(type) ? type : NODE_TYPES[0],
         point,
         radius,
         color,

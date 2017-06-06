@@ -21,33 +21,11 @@ const emitter = {
         return emitter;
     },
     emit(ev, ...args) {
-        store(ev).forEach(f => f(...args));
+        store(ev).forEach((f) => f(...args));
         return emitter;
     },
     count(ev) {
         return store(ev).size;
-    },
-    test() {
-        console.log('define ev handlers');
-        const bob = (msg) => console.log(`bob ${msg}`);
-        const sam = (msg) => console.log(`sam ${msg}`);
-        const mary = (msg) => console.log(`mary ${msg}`);
-        console.log('add event handlers');
-        emitter.on('bob', bob);
-        emitter.on('sam', sam);
-        emitter.once('mary', mary);
-        console.log('emit events');
-        emitter.emit('bob', 'Bob');
-        emitter.emit('sam', 'Sam');
-        emitter.emit('mary', 'Mary');
-        console.log('remove event handlers');
-        emitter.off('sam', sam);
-        console.log('emit events');
-        emitter.emit('bob', 'Bob');
-        emitter.emit('sam', 'Sam');
-        emitter.emit('mary', 'Mary');
-        console.log('cleanup');
-        emitter.off('bob', bob);
     }
 };
 

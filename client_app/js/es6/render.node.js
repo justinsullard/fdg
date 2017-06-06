@@ -37,8 +37,8 @@ const sizeText = (txt) => {
             height,
             tx: width / -2,
             ty: 0,
-            rx: (width / -2) - 2,
-            ry: (height / -2) - 2,
+            rx: width / -2 - 2,
+            ry: height / -2 - 2,
             rwidth: width + 4,
             rheight: height + 4
         };
