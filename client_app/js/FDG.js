@@ -6,14 +6,19 @@ define([
     "utils/mediator",
     "config/main",
     "utils/runnable",
-    "knockout"
+    "knockout",
+    "utils/extras",
+    "utils/postgres",
+    "utils/stringify",
+    "utils/services"
 ], function (
     $,
     util,
     mediator,
     config,
     runnable,
-    ko
+    ko,
+    extras
 ) {
     "use strict";
     var priv, FDG, facade;
@@ -101,7 +106,8 @@ define([
         "state": priv.state,
         "runTime": priv.runTime,
         "ko": ko,
-        "$": $
+        "$": $,
+        "extras": extras
     };
 
     priv.subscriptions.push(util.mediator.subscribe({"channel": "fdg-start-request", "callback": priv.start, "context": FDG}));

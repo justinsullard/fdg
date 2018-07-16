@@ -27,7 +27,7 @@
 				<svg id="FDG-Graph" height="0" width="0" style="background-color: #fff;" xmlns="http://www.w3.org/2000/svg">
 					<g id="FDG-Connection-Group" class="connectionGroup">
 						<!-- ko foreach: connections -->
-						<g class="connection" data-bind="connectionControl: $data">
+						<g class="connection" data-bind="connectionControl: $data" data-bind="attr: { guid: guid }">
 							<path fill="none" stroke="#444" d="M0,0Z" stroke-width="4" stroke-linejoin="round" opacity="0" style="stroke-linejoin: round; opacity: 0;" data-bind="attr: {d: path, stroke: currentColor}"></path>
 							<path fill="none" stroke="#444" d="M0,0Z" stroke-width="1" stroke-linejoin="round" opacity="1" style="stroke-linejoin: round; opacity: 1;" data-bind="attr: {d: path, stroke: currentColor}"></path>
 							<!-- ALPHA LINE ENDINGS -->
